@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Data and training artifacts
+data/raw/
+data/processed/
+data/external/
+datasets/
+search_checkpoints/
+eval_checkpoints/
+runs/
+logs/
+streamlit_runtime/
+outputs/
+artifacts/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.ts
+*.torchscript
+events.out.tfevents.*
+
+# Secrets
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+!.streamlit/secrets.toml.example
+
+# Docker / local
+*.log
+/tmp/
