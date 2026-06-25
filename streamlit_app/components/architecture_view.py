@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import tempfile
 from pathlib import Path
-from typing import Dict, Optional
 
 import streamlit as st
 
@@ -13,7 +12,7 @@ from search.utils import genotype_to_string, plot_cell
 from utils.file_utils import load_checkpoint, load_json
 
 
-def _validate_genotype(genotype: Dict[str, list]) -> None:
+def _validate_genotype(genotype: dict[str, list]) -> None:
     """Validate the minimal DARTS genotype structure expected by the visualizer."""
     required = {"normal", "normal_concat", "reduce", "reduce_concat"}
     missing = required - set(genotype)
@@ -24,7 +23,7 @@ def _validate_genotype(genotype: Dict[str, list]) -> None:
             raise ValueError(f"Genotype key `{key}` must be a non-empty list.")
 
 
-def _load_genotype_from_upload() -> Optional[Dict[str, list]]:
+def _load_genotype_from_upload() -> dict[str, list] | None:
     """Load genotype JSON from a Streamlit file uploader."""
     uploaded = st.file_uploader("Upload genotype JSON", type=["json"])
     if uploaded is None:
@@ -37,7 +36,7 @@ def _load_genotype_from_upload() -> Optional[Dict[str, list]]:
     return genotype
 
 
-def _load_genotype_from_path(path: str) -> Optional[Dict[str, list]]:
+def _load_genotype_from_path(path: str) -> dict[str, list] | None:
     """Load genotype from a JSON or checkpoint path."""
     if not path:
         return None

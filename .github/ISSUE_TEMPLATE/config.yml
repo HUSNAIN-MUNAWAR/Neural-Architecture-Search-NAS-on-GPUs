@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Project documentation
+    url: https://github.com/HUSNAIN-MUNAWAR/Neural-Architecture-Search-NAS-on-GPUs#readme
+    about: Start with the README, architecture notes, benchmarks, and deployment guide.

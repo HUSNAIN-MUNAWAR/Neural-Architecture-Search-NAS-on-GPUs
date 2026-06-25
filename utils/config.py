@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass, fields
 from pathlib import Path
-from typing import Any, Dict, Type, TypeVar
+from typing import Any, TypeVar
 
 import yaml
-
 
 T = TypeVar("T")
 
@@ -79,7 +78,7 @@ class EvalConfig:
     download_data: bool = True
 
 
-def load_yaml(path: str) -> Dict[str, Any]:
+def load_yaml(path: str) -> dict[str, Any]:
     """Load a YAML file into a Python dictionary."""
     yaml_path = Path(path)
     if not yaml_path.exists():
@@ -91,7 +90,7 @@ def load_yaml(path: str) -> Dict[str, Any]:
     return data
 
 
-def _coerce_dataclass(config_cls: Type[T], data: Dict[str, Any]) -> T:
+def _coerce_dataclass(config_cls: type[T], data: dict[str, Any]) -> T:
     """Create a dataclass instance while rejecting unknown keys."""
     allowed = {field.name for field in fields(config_cls)}
     unknown = set(data) - allowed
@@ -110,7 +109,7 @@ def load_eval_config(path: str) -> EvalConfig:
     return _coerce_dataclass(EvalConfig, load_yaml(path))
 
 
-def save_yaml(data: Dict[str, Any], path: str) -> None:
+def save_yaml(data: dict[str, Any], path: str) -> None:
     """Save a dictionary as YAML."""
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Iterable, List, Tuple
-
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DOCS_DIR = PROJECT_ROOT / "docs"
@@ -57,7 +55,13 @@ def _draw_diagram_matplotlib(output_path: Path) -> None:
         arrow = FancyArrowPatch(start, end, arrowstyle="->", mutation_scale=18, linewidth=1.5, color="#37474F")
         ax.add_patch(arrow)
     ax.text(7, 7.3, "NAS GPU Project - DARTS System Architecture", ha="center", fontsize=16, fontweight="bold")
-    ax.text(7, 0.7, "Config-driven pipelines, CUDA acceleration, TensorBoard logging, Streamlit control plane", ha="center", fontsize=11)
+    ax.text(
+        7,
+        0.7,
+        "Config-driven pipelines, CUDA acceleration, TensorBoard logging, Streamlit control plane",
+        ha="center",
+        fontsize=11,
+    )
     fig.tight_layout()
     fig.savefig(output_path, dpi=180)
     plt.close(fig)
@@ -103,7 +107,7 @@ def generate_architecture_png(output_path: str | Path | None = None) -> Path:
     return output
 
 
-def _pdf_story() -> List[Tuple[str, str]]:
+def _pdf_story() -> list[tuple[str, str]]:
     """Return report sections."""
     return [
         (
@@ -154,7 +158,12 @@ def generate_pdf_report(output_path: str | Path | None = None) -> Path:
     story = []
     story.append(Paragraph("Neural Architecture Search on GPUs - Project Report", styles["Title"]))
     story.append(Spacer(1, 0.25 * inch))
-    story.append(Paragraph("DARTS first-order architecture search for CIFAR-10 using PyTorch, CUDA, AMP, TensorBoard, and Streamlit.", styles["BodyText"]))
+    story.append(
+        Paragraph(
+            "DARTS first-order architecture search for CIFAR-10 using PyTorch, CUDA, AMP, TensorBoard, and Streamlit.",
+            styles["BodyText"],
+        )
+    )
     story.append(Spacer(1, 0.35 * inch))
     if diagram_path.exists():
         story.append(Image(str(diagram_path), width=6.6 * inch, height=3.8 * inch))

@@ -1,18 +1,16 @@
 # Benchmarks
 
-This file intentionally avoids fake benchmark claims. Fill it only after a real measured run.
+This file is the benchmark registry for measured NAS search and evaluation runs. It currently has no published GPU benchmark rows. Add results only when the run can be reproduced from the commit, config, hardware notes, metrics file, and genotype artifact.
 
 ## Search Runs
 
-| Date | GPU | Config | Search epochs | Init channels | Layers | Best train acc | Final genotype path | Notes |
-|---|---|---|---:|---:|---:|---:|---|---|
-| To be filled after GPU run | To be filled | `configs/demo_gpu.yaml` | 5 | 16 | 8 | To be measured | `search_checkpoints/demo_gpu/genotype.json` | Placeholder row |
+| Date | Commit | GPU | Config | Search epochs | Init channels | Layers | Best train acc | Final genotype path | Metrics path | Notes |
+|---|---|---|---|---:|---:|---:|---:|---|---|---|
 
 ## Evaluation Runs
 
-| Date | GPU | Genotype | Eval epochs | Test accuracy | Params (M) | Latency (ms) | Export path | Notes |
-|---|---|---|---:|---:|---:|---:|---|---|
-| To be filled after GPU run | To be filled | To be filled | To be filled | To be measured | To be measured | To be measured | To be filled | Placeholder row |
+| Date | Commit | GPU | Genotype | Eval config | Eval epochs | Test accuracy | Params (M) | Latency (ms) | Export path | Metrics path | Notes |
+|---|---|---|---|---|---:|---:|---:|---:|---|---|---|
 
 ## Smoke Artifact Examples
 
@@ -23,7 +21,7 @@ The repository includes synthetic smoke artifacts under `examples/` so reviewers
 | `examples/smoke_genotype.synthetic.json` | Genotype JSON format from a tiny offline synthetic run | No |
 | `examples/smoke_metrics.synthetic.jsonl` | JSONL metric format from a tiny offline synthetic run | No |
 
-Synthetic smoke data is random CIFAR-shaped tensor data. It verifies code plumbing only and must never be presented as CIFAR-10 accuracy.
+Synthetic smoke data is random CIFAR-shaped tensor data. It verifies code paths and artifact formats only.
 
 ## Required Evidence for Published Numbers
 

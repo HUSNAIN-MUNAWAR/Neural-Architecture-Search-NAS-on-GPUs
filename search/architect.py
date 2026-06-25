@@ -4,13 +4,12 @@ from __future__ import annotations
 
 import copy
 import logging
-from typing import Iterable, List, Sequence
+from collections.abc import Iterable, Sequence
 
 import torch
 import torch.nn as nn
 
 from utils.gpu_utils import unwrap_model
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -132,7 +131,7 @@ class Architect:
         input_train: torch.Tensor,
         target_train: torch.Tensor,
         r: float = 1e-2,
-    ) -> List[torch.Tensor]:
+    ) -> list[torch.Tensor]:
         """Estimate Hessian-vector product for architecture parameters."""
         norm = torch.cat([v.view(-1) for v in vector]).norm()
         eps = r / (norm + 1e-12)

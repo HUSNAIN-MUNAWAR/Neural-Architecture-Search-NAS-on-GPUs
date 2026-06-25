@@ -54,4 +54,4 @@ Full determinism can reduce performance and may not be guaranteed across CUDA ke
 
 ## Benchmark Template
 
-Use `docs/BENCHMARKS.md` to record measured runs. Do not add fake accuracy, latency, or parameter numbers.
+Use `docs/BENCHMARKS.md` to record measured runs. Accuracy, latency, and parameter counts should be reported only from reproducible evaluation commands and saved artifacts.

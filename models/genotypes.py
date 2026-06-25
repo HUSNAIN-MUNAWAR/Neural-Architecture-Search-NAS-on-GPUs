@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List
-
-
-DARTS_V1: Dict[str, List] = {
+DARTS_V1: dict[str, list] = {
     "normal": [
         ["sep_conv_3x3", 1],
         ["sep_conv_3x3", 0],
@@ -31,7 +28,7 @@ DARTS_V1: Dict[str, List] = {
 }
 
 
-DARTS_V2: Dict[str, List] = {
+DARTS_V2: dict[str, list] = {
     "normal": [
         ["sep_conv_3x3", 0],
         ["sep_conv_3x3", 1],

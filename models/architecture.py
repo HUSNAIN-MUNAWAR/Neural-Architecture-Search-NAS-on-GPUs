@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Sequence, Tuple, Union
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -12,8 +10,7 @@ from models.operations import PRIMITIVES
 from models.search_space import DiscreteCell, SearchCell
 from search.utils import derive_genotype
 
-
-Genotype = Dict[str, List]
+Genotype = dict[str, list]
 
 
 class AuxiliaryHeadCIFAR(nn.Module):
@@ -48,7 +45,7 @@ class DartsNetworkCIFAR(nn.Module):
         init_channels: int = 16,
         num_classes: int = 10,
         layers: int = 8,
-        criterion: Optional[nn.Module] = None,
+        criterion: nn.Module | None = None,
         steps: int = 4,
         multiplier: int = 4,
         stem_channels: int = 16,
@@ -102,11 +99,11 @@ class DartsNetworkCIFAR(nn.Module):
         self.alphas_reduce = nn.Parameter(1e-3 * torch.randn(num_edges, num_ops))
         self._arch_parameters = [self.alphas_normal, self.alphas_reduce]
 
-    def arch_parameters(self) -> List[nn.Parameter]:
+    def arch_parameters(self) -> list[nn.Parameter]:
         """Return architecture parameters optimized by Adam."""
         return self._arch_parameters
 
-    def weight_parameters(self) -> List[nn.Parameter]:
+    def weight_parameters(self) -> list[nn.Parameter]:
         """Return network parameters excluding architecture weights."""
         arch_ids = {id(param) for param in self.arch_parameters()}
         return [param for param in self.parameters() if id(param) not in arch_ids]
@@ -145,7 +142,7 @@ class NetworkCIFAR(nn.Module):
         auxiliary: bool = True,
         steps: int = 4,
         multiplier: int = 4,
-        stem_channels: Optional[int] = None,
+        stem_channels: int | None = None,
     ) -> None:
         super().__init__()
         self.drop_path_prob = 0.0
@@ -162,7 +159,7 @@ class NetworkCIFAR(nn.Module):
         c_curr = int(init_channels)
         self.cells = nn.ModuleList()
         reduction_prev = False
-        self.auxiliary_head: Optional[AuxiliaryHeadCIFAR] = None
+        self.auxiliary_head: AuxiliaryHeadCIFAR | None = None
         for layer_idx in range(self.layers):
             if layer_idx in (self.layers // 3, 2 * self.layers // 3):
                 c_curr *= 2
@@ -187,11 +184,11 @@ class NetworkCIFAR(nn.Module):
         self.global_pooling = nn.AdaptiveAvgPool2d(1)
         self.classifier = nn.Linear(c_prev, num_classes)
 
-    def forward(self, x: torch.Tensor) -> Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
+    def forward(self, x: torch.Tensor) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
         """Forward computation returning logits and optional auxiliary logits during training."""
         s0 = self.stem(x)
         s1 = s0
-        aux_logits: Optional[torch.Tensor] = None
+        aux_logits: torch.Tensor | None = None
         for layer_idx, cell in enumerate(self.cells):
             s0, s1 = s1, cell(s0, s1, self.drop_path_prob)
             if self.training and self.auxiliary_head is not None and layer_idx == self.auxiliary_head_index:

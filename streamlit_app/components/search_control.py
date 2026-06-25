@@ -7,7 +7,6 @@ import signal
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict
 
 import streamlit as st
 import torch
@@ -15,8 +14,7 @@ import yaml
 
 from streamlit_app.state import get_process_status, set_state
 
-
-PRESETS: Dict[str, Dict[str, object]] = {
+PRESETS: dict[str, dict[str, object]] = {
     "CPU smoke mode": {
         "epochs": 1,
         "batch_size": 4,
@@ -52,7 +50,7 @@ PRESETS: Dict[str, Dict[str, object]] = {
 }
 
 
-def _write_runtime_config(config: Dict[str, object], path: str) -> str:
+def _write_runtime_config(config: dict[str, object], path: str) -> str:
     """Write a search configuration from UI controls."""
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -95,18 +93,30 @@ def render_search_controls() -> None:
         with col1:
             data_root = st.text_input("Dataset root", value="./data")
             epochs = st.number_input("Search epochs", min_value=1, max_value=200, value=int(preset["epochs"]), step=1)
-            batch_size = st.number_input("Batch size", min_value=1, max_value=512, value=int(preset["batch_size"]), step=1)
-            val_batch_size = st.number_input("Validation batch size", min_value=1, max_value=1024, value=int(preset["val_batch_size"]), step=1)
+            batch_size = st.number_input(
+                "Batch size", min_value=1, max_value=512, value=int(preset["batch_size"]), step=1
+            )
+            val_batch_size = st.number_input(
+                "Validation batch size", min_value=1, max_value=1024, value=int(preset["val_batch_size"]), step=1
+            )
         with col2:
-            init_channels = st.number_input("Initial channels", min_value=2, max_value=64, value=int(preset["init_channels"]), step=2)
+            init_channels = st.number_input(
+                "Initial channels", min_value=2, max_value=64, value=int(preset["init_channels"]), step=2
+            )
             layers = st.number_input("Layers", min_value=2, max_value=30, value=int(preset["layers"]), step=1)
             seed = st.number_input("Seed", min_value=0, max_value=999999, value=42, step=1)
-            num_workers = st.number_input("Data workers", min_value=0, max_value=32, value=int(preset["num_workers"]), step=1)
+            num_workers = st.number_input(
+                "Data workers", min_value=0, max_value=32, value=int(preset["num_workers"]), step=1
+            )
         with col3:
             learning_rate = st.number_input("Network LR", min_value=0.0001, max_value=1.0, value=0.025, format="%.5f")
-            arch_learning_rate = st.number_input("Architecture LR", min_value=0.00001, max_value=0.1, value=0.0003, format="%.5f")
+            arch_learning_rate = st.number_input(
+                "Architecture LR", min_value=0.00001, max_value=0.1, value=0.0003, format="%.5f"
+            )
             output_dir = st.text_input("Output directory", value=str(preset["save_dir"]))
-            log_interval = st.number_input("Log interval", min_value=1, max_value=500, value=int(preset["log_interval"]), step=1)
+            log_interval = st.number_input(
+                "Log interval", min_value=1, max_value=500, value=int(preset["log_interval"]), step=1
+            )
             use_synthetic_data = st.checkbox(
                 "Use offline synthetic smoke data",
                 value=bool(preset.get("use_synthetic_data", False)),
@@ -158,7 +168,9 @@ def render_search_controls() -> None:
             log_file = Path(output_dir) / "streamlit_subprocess.log"
             log_file.parent.mkdir(parents=True, exist_ok=True)
             handle = log_file.open("w", encoding="utf-8")
-            proc = subprocess.Popen(command, stdout=handle, stderr=subprocess.STDOUT, cwd=Path(__file__).resolve().parents[2])
+            proc = subprocess.Popen(
+                command, stdout=handle, stderr=subprocess.STDOUT, cwd=Path(__file__).resolve().parents[2]
+            )
             set_state("search_process", proc)
             set_state("search_output_dir", output_dir)
             set_state("last_config_path", config_path)

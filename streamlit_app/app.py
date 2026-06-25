@@ -72,7 +72,9 @@ def render_export_deployment() -> None:
         output_dir / "search.log",
         output_dir / "streamlit_subprocess.log",
     ]
-    exported = list(output_dir.rglob("*.onnx")) + list(output_dir.rglob("*.ts")) + list(output_dir.rglob("*.torchscript"))
+    exported = (
+        list(output_dir.rglob("*.onnx")) + list(output_dir.rglob("*.ts")) + list(output_dir.rglob("*.torchscript"))
+    )
     downloadable.extend(exported)
 
     available = [path for path in downloadable if path.exists() and path.is_file()]
@@ -90,7 +92,7 @@ def render_export_deployment() -> None:
         """
         ### Always-on deployment
 
-        Streamlit Community Cloud is fine for demos but may sleep after inactivity. For a serious always-on portfolio demo,
+        Streamlit Community Cloud is fine for demos but may sleep after inactivity. For a serious always-on public demo,
         use Docker Compose or systemd on a VPS.
 
         ```bash
@@ -118,8 +120,6 @@ def render_docs() -> None:
         ("Project Report", "docs/PROJECT_REPORT.md"),
         ("Architecture", "docs/ARCHITECTURE.md"),
         ("Demo Guide", "docs/DEMO_GUIDE.md"),
-        ("Portfolio Pitch", "docs/PORTFOLIO_PITCH.md"),
-        ("Upwork Proposal Snippets", "docs/UPWORK_PROPOSAL_SNIPPETS.md"),
     ]
     for title, rel_path in docs:
         path = PROJECT_ROOT / rel_path
@@ -132,12 +132,12 @@ def render_docs() -> None:
 
 def main() -> None:
     """Run the Streamlit NAS dashboard."""
-    st.set_page_config(page_title="NAS GPU Platform", layout="wide", page_icon="🧠")
+    st.set_page_config(page_title="NAS GPU Platform", layout="wide")
     init_state()
 
     with st.sidebar:
         st.title("NAS GPU Platform")
-        st.caption("DARTS • PyTorch • Streamlit • Docker")
+        st.caption("DARTS | PyTorch | Streamlit | Docker")
         process = st.session_state.get("search_process")
         st.write("**Runtime status**")
         st.info(get_process_status(process))
@@ -154,16 +154,18 @@ def main() -> None:
             st.warning("CUDA not detected. CPU smoke mode is recommended.")
 
     st.title("Neural Architecture Search on GPUs")
-    st.caption("Production-oriented AutoML portfolio project using DARTS, CUDA-aware PyTorch, TensorBoard, and Streamlit.")
+    st.caption("Production-oriented AutoML system using DARTS, CUDA-aware PyTorch, TensorBoard, and Streamlit.")
 
-    tabs = st.tabs([
-        "Overview",
-        "Launch Search",
-        "Monitor Runs",
-        "Architecture Viewer",
-        "Export / Deployment",
-        "Documentation",
-    ])
+    tabs = st.tabs(
+        [
+            "Overview",
+            "Launch Search",
+            "Monitor Runs",
+            "Architecture Viewer",
+            "Export / Deployment",
+            "Documentation",
+        ]
+    )
     with tabs[0]:
         render_overview()
     with tabs[1]:

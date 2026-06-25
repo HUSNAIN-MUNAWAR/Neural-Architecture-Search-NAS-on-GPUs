@@ -49,7 +49,7 @@ docker compose exec nas-streamlit python -c "import torch; print(torch.cuda.is_a
 For an always-on demo, use a small Ubuntu VPS and run:
 
 ```bash
-git clone https://github.com/your-org/Neural-Architecture-Search-NAS-on-GPUs.git
+git clone https://github.com/HUSNAIN-MUNAWAR/Neural-Architecture-Search-NAS-on-GPUs.git
 cd Neural-Architecture-Search-NAS-on-GPUs
 docker compose up -d --build
 ```
@@ -84,7 +84,7 @@ Add TLS with Certbot for public demos.
 
 ## Streamlit Community Cloud Limitation
 
-Free Streamlit Community Cloud is useful for simple demos, but apps may sleep after inactivity and are not ideal for heavy NAS jobs. For always-on portfolio or client demos, prefer:
+Free Streamlit Community Cloud is useful for simple demos, but apps may sleep after inactivity and are not ideal for heavy NAS jobs. For always-on public demos, prefer:
 
 - VPS + Docker Compose
 - VPS + systemd

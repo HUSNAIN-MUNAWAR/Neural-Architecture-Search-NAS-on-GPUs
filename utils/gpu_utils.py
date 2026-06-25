@@ -4,12 +4,10 @@ from __future__ import annotations
 
 import logging
 import os
-from typing import Dict, List, Optional
 
 import torch
 import torch.distributed as dist
 import torch.nn as nn
-
 
 LOGGER = logging.getLogger(__name__)
 
@@ -41,11 +39,11 @@ def enable_cudnn_benchmark() -> None:
         torch.backends.cudnn.enabled = True
 
 
-def gpu_memory_stats() -> List[Dict[str, float]]:
+def gpu_memory_stats() -> list[dict[str, float]]:
     """Return memory statistics for every visible CUDA device."""
     if not torch.cuda.is_available():
         return []
-    stats: List[Dict[str, float]] = []
+    stats: list[dict[str, float]] = []
     for index in range(torch.cuda.device_count()):
         free_bytes, total_bytes = torch.cuda.mem_get_info(index)
         used_bytes = total_bytes - free_bytes
@@ -75,7 +73,7 @@ def select_device(prefer_gpu: bool = True) -> torch.device:
     return torch.device("cpu")
 
 
-def init_distributed_from_env() -> Optional[int]:
+def init_distributed_from_env() -> int | None:
     """Initialize torch.distributed from standard environment variables."""
     if "RANK" not in os.environ or "WORLD_SIZE" not in os.environ:
         return None
@@ -100,7 +98,7 @@ def prepare_model_for_gpu(
     device: torch.device,
     multi_gpu: bool = True,
     distributed: bool = False,
-    local_rank: Optional[int] = None,
+    local_rank: int | None = None,
 ) -> nn.Module:
     """Move a model to device and wrap for DataParallel or DDP when requested."""
     model = model.to(device)

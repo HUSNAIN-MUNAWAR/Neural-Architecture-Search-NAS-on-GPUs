@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict
 
 import torch
 import torch.nn as nn
@@ -38,7 +37,7 @@ def export_onnx(model: nn.Module, output_path: str, device: torch.device) -> str
     return str(output)
 
 
-def export_all(model: nn.Module, output_dir: str, device: torch.device) -> Dict[str, str]:
+def export_all(model: nn.Module, output_dir: str, device: torch.device) -> dict[str, str]:
     """Export both TorchScript and ONNX artifacts."""
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=True)

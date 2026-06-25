@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 import torch
 
@@ -16,7 +16,7 @@ def ensure_dir(path: str) -> Path:
     return directory
 
 
-def save_checkpoint(state: Dict[str, Any], path: str) -> None:
+def save_checkpoint(state: dict[str, Any], path: str) -> None:
     """Atomically save a PyTorch checkpoint."""
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -25,7 +25,7 @@ def save_checkpoint(state: Dict[str, Any], path: str) -> None:
     tmp_path.replace(output)
 
 
-def load_checkpoint(path: str, map_location: str | torch.device = "cpu") -> Dict[str, Any]:
+def load_checkpoint(path: str, map_location: str | torch.device = "cpu") -> dict[str, Any]:
     """Load a PyTorch checkpoint from disk."""
     checkpoint_path = Path(path)
     if not checkpoint_path.exists():
@@ -33,7 +33,7 @@ def load_checkpoint(path: str, map_location: str | torch.device = "cpu") -> Dict
     return torch.load(checkpoint_path, map_location=map_location)
 
 
-def save_json(data: Dict[str, Any], path: str) -> None:
+def save_json(data: dict[str, Any], path: str) -> None:
     """Save JSON data with stable formatting."""
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -43,7 +43,7 @@ def save_json(data: Dict[str, Any], path: str) -> None:
     tmp_path.replace(output)
 
 
-def load_json(path: str) -> Dict[str, Any]:
+def load_json(path: str) -> dict[str, Any]:
     """Load JSON data from disk."""
     input_path = Path(path)
     if not input_path.exists():

@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, List, Sequence, Tuple
+from collections.abc import Sequence
 
 import torch
 import torch.nn as nn
 
-from models.operations import FactorizedReduce, MixedOp, OPS, ReLUConvBN, drop_path
+from models.operations import OPS, FactorizedReduce, MixedOp, ReLUConvBN, drop_path
 
-Gene = Tuple[str, int]
-GenotypeDict = Dict[str, List]
+Gene = tuple[str, int]
+GenotypeDict = dict[str, list]
 
 
 class SearchCell(nn.Module):
@@ -48,7 +48,7 @@ class SearchCell(nn.Module):
         s1 = self.preprocess1(s1)
         states = [s0, s1]
         offset = 0
-        for i in range(self.steps):
+        for _i in range(self.steps):
             new_state = sum(self.ops[offset + j](h, weights[offset + j]) for j, h in enumerate(states))
             offset += len(states)
             states.append(new_state)
@@ -113,7 +113,7 @@ class DiscreteCell(nn.Module):
         gene = [tuple(item) for item in genotype[gene_key]]
         self.concat = list(genotype.get(concat_key, range(2, 2 + multiplier)))
         self.ops = nn.ModuleList()
-        self.indices: List[int] = []
+        self.indices: list[int] = []
         for name, index in gene:
             stride = 2 if reduction and int(index) < 2 else 1
             self.ops.append(OPS[str(name)](channels, stride, True))

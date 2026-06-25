@@ -4,11 +4,8 @@ from __future__ import annotations
 
 import itertools
 import json
-import logging
 import random
 import time
-from pathlib import Path
-from typing import Dict, Iterable, Tuple
 
 import numpy as np
 import torch
@@ -46,7 +43,7 @@ class AverageMeter:
         self.avg = self.sum / max(1, self.count)
 
 
-def accuracy(logits: torch.Tensor, target: torch.Tensor, topk: Tuple[int, ...] = (1,)) -> Tuple[torch.Tensor, ...]:
+def accuracy(logits: torch.Tensor, target: torch.Tensor, topk: tuple[int, ...] = (1,)) -> tuple[torch.Tensor, ...]:
     """Compute top-k classification accuracy."""
     maxk = max(topk)
     batch_size = target.size(0)
@@ -105,12 +102,12 @@ class DartsTrainer:
         if torch.cuda.is_available():
             torch.cuda.manual_seed_all(seed)
 
-    def _append_metrics(self, data: Dict[str, float]) -> None:
+    def _append_metrics(self, data: dict[str, float]) -> None:
         """Append one metrics record to JSONL for Streamlit monitoring."""
         with self.metrics_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(data) + "\n")
 
-    def _train_epoch(self, epoch: int) -> Dict[str, float]:
+    def _train_epoch(self, epoch: int) -> dict[str, float]:
         """Run one DARTS search epoch."""
         self.model.train()
         objs = AverageMeter()
@@ -172,11 +169,11 @@ class DartsTrainer:
             "seconds": elapsed,
         }
 
-    def fit(self) -> Dict[str, list]:
+    def fit(self) -> dict[str, list]:
         """Run the architecture search and save checkpoints/genotype."""
         self.set_seed(self.config.seed)
         best_acc = 0.0
-        final_genotype: Dict[str, list] = {}
+        final_genotype: dict[str, list] = {}
         for epoch in range(self.config.epochs):
             metrics = self._train_epoch(epoch)
             self.scheduler.step()

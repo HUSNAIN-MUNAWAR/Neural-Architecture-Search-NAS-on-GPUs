@@ -2,12 +2,8 @@
 
 from __future__ import annotations
 
-import json
-import logging
 import random
 import time
-from pathlib import Path
-from typing import Dict, Tuple
 
 import numpy as np
 import torch
@@ -41,7 +37,7 @@ def train_one_epoch(
     scaler: amp.GradScaler,
     device: torch.device,
     config: EvalConfig,
-) -> Tuple[float, float]:
+) -> tuple[float, float]:
     """Train a discrete architecture for one epoch."""
     model.train()
     total_loss = 0.0
@@ -71,7 +67,7 @@ def train_one_epoch(
     return total_loss / max(1, total), 100.0 * total_correct / max(1, total)
 
 
-def train_from_scratch(config: EvalConfig, genotype_path: str) -> Dict[str, float]:
+def train_from_scratch(config: EvalConfig, genotype_path: str) -> dict[str, float]:
     """Train a genotype from scratch and export the best model."""
     set_seed(config.seed)
     save_dir = ensure_dir(config.save_dir)
@@ -120,7 +116,7 @@ def train_from_scratch(config: EvalConfig, genotype_path: str) -> Dict[str, floa
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, config.epochs)
     scaler = amp.GradScaler(enabled=config.amp and device.type == "cuda")
     best_acc = 0.0
-    best_metrics: Dict[str, float] = {}
+    best_metrics: dict[str, float] = {}
     for epoch in range(config.epochs):
         start = time.time()
         unwrap_model(model).drop_path_prob = config.drop_path_prob * epoch / max(1, config.epochs - 1)

@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
-from typing import Dict
 
 import torch
 
@@ -23,7 +22,7 @@ from utils.config import load_search_config
 from utils.gpu_utils import gpu_memory_stats
 
 
-def _status() -> Dict[str, object]:
+def _status() -> dict[str, object]:
     """Collect runtime status for reproducibility notes."""
     return {
         "python": sys.version.split()[0],

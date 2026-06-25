@@ -3,10 +3,9 @@
 from __future__ import annotations
 
 import subprocess
-from typing import Any, Optional
+from typing import Any
 
 import streamlit as st
-
 
 DEFAULTS = {
     "search_process": None,
@@ -34,7 +33,7 @@ def get_state(key: str, default: Any = None) -> Any:
     return st.session_state.get(key, default)
 
 
-def get_process_status(process: Optional[subprocess.Popen]) -> str:
+def get_process_status(process: subprocess.Popen | None) -> str:
     """Return a human-readable subprocess status."""
     if process is None:
         return "No active search process"

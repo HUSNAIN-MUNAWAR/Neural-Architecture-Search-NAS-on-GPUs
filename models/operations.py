@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Callable, Dict, Iterable, List
+from collections.abc import Iterable
+from typing import Callable
 
 import torch
 import torch.nn as nn
 
-
-PRIMITIVES: List[str] = [
+PRIMITIVES: list[str] = [
     "sep_conv_3x3",
     "sep_conv_5x5",
     "dil_conv_3x3",
@@ -173,14 +173,12 @@ def _skip_or_reduce(channels: int, stride: int, affine: bool) -> nn.Module:
     return FactorizedReduce(channels, channels, affine=affine)
 
 
-OPS: Dict[str, Callable[[int, int, bool], nn.Module]] = {
+OPS: dict[str, Callable[[int, int, bool], nn.Module]] = {
     "sep_conv_3x3": lambda c, stride, affine: SepConv(c, c, 3, stride, 1, affine=affine),
     "sep_conv_5x5": lambda c, stride, affine: SepConv(c, c, 5, stride, 2, affine=affine),
     "dil_conv_3x3": lambda c, stride, affine: DilConv(c, c, 3, stride, 2, 2, affine=affine),
     "dil_conv_5x5": lambda c, stride, affine: DilConv(c, c, 5, stride, 4, 2, affine=affine),
-    "max_pool_3x3": lambda c, stride, affine: PoolBN(
-        nn.MaxPool2d(3, stride=stride, padding=1), c, affine=affine
-    ),
+    "max_pool_3x3": lambda c, stride, affine: PoolBN(nn.MaxPool2d(3, stride=stride, padding=1), c, affine=affine),
     "avg_pool_3x3": lambda c, stride, affine: PoolBN(
         nn.AvgPool2d(3, stride=stride, padding=1, count_include_pad=False), c, affine=affine
     ),

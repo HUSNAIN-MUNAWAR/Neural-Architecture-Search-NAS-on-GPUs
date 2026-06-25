@@ -1,0 +1,43 @@
+name: Bug report
+description: Report a reproducible problem in the NAS workflow, dashboard, or deployment path.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Describe the failure and the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include the exact command, config file, and dataset mode.
+      placeholder: |
+        1. Run `python scripts/run_search.py --config configs/smoke_cpu.yaml`
+        2. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Python version, PyTorch version, CUDA version, and GPU model if relevant.
+      placeholder: |
+        OS:
+        Python:
+        PyTorch:
+        CUDA:
+        GPU:
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or traceback
+      render: shell
+    validations:
+      required: false

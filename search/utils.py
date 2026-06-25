@@ -4,19 +4,18 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, Iterable, List, Sequence, Tuple
 
 import torch
 import torch.nn.functional as F
 
 from models.operations import PRIMITIVES
 
-Genotype = Dict[str, List]
+Genotype = dict[str, list]
 
 
-def _parse(weights: torch.Tensor, k: int = 2) -> List[List[object]]:
+def _parse(weights: torch.Tensor, k: int = 2) -> list[list[object]]:
     """Parse edge weights into a DARTS gene list."""
-    gene: List[List[object]] = []
+    gene: list[list[object]] = []
     n = 2
     start = 0
     primitive_names = list(PRIMITIVES)

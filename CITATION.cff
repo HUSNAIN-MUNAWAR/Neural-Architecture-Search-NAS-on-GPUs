@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it using the metadata below."
+title: "Neural Architecture Search on GPUs"
+type: software
+authors:
+  - family-names: "Munawar"
+    given-names: "Husnain"
+repository-code: "https://github.com/HUSNAIN-MUNAWAR/Neural-Architecture-Search-NAS-on-GPUs"
+url: "https://github.com/HUSNAIN-MUNAWAR/Neural-Architecture-Search-NAS-on-GPUs"
+abstract: "GPU-aware DARTS Neural Architecture Search platform with PyTorch, Streamlit, Docker, CI, and reproducible experiment tooling."
+keywords:
+  - neural architecture search
+  - DARTS
+  - AutoML
+  - PyTorch
+  - CUDA
+  - Streamlit
+  - MLOps
+license: MIT
+version: "0.1.0"

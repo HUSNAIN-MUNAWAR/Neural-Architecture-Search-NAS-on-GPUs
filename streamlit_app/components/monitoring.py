@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List
 
 import pandas as pd
 import plotly.express as px
@@ -13,7 +12,7 @@ import streamlit as st
 
 def _load_jsonl(path: Path) -> pd.DataFrame:
     """Load metrics from JSON lines."""
-    records: List[Dict[str, float]] = []
+    records: list[dict[str, float]] = []
     if not path.exists():
         return pd.DataFrame()
     for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
@@ -87,7 +86,9 @@ def render_monitoring(output_dir: str) -> None:
     else:
         st.caption("TensorBoard scalar events")
         st.dataframe(tb_df.tail(100), use_container_width=True)
-        selected_tags = st.multiselect("TensorBoard tags", sorted(tb_df["tag"].unique()), default=list(sorted(tb_df["tag"].unique()))[:3])
+        selected_tags = st.multiselect(
+            "TensorBoard tags", sorted(tb_df["tag"].unique()), default=list(sorted(tb_df["tag"].unique()))[:3]
+        )
         if selected_tags:
             subset = tb_df[tb_df["tag"].isin(selected_tags)]
             fig = px.line(subset, x="step", y="value", color="tag", title="TensorBoard Scalars")

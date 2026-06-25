@@ -7,8 +7,8 @@ import importlib.util
 import py_compile
 import re
 import sys
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, List
 
 import yaml
 
@@ -65,14 +65,14 @@ IMPORTS = [
 ]
 
 
-def _check_required_files() -> List[str]:
+def _check_required_files() -> list[str]:
     """Return missing required files."""
     return [rel for rel in REQUIRED_FILES if not (PROJECT_ROOT / rel).exists()]
 
 
-def _check_yaml(paths: Iterable[Path]) -> List[str]:
+def _check_yaml(paths: Iterable[Path]) -> list[str]:
     """Validate YAML config files."""
-    errors: List[str] = []
+    errors: list[str] = []
     for path in paths:
         try:
             with path.open("r", encoding="utf-8") as handle:
@@ -84,11 +84,11 @@ def _check_yaml(paths: Iterable[Path]) -> List[str]:
     return errors
 
 
-def _check_readme_links() -> List[str]:
+def _check_readme_links() -> list[str]:
     """Check local markdown links in README."""
     readme = (PROJECT_ROOT / "README.md").read_text(encoding="utf-8")
     links = re.findall(r"\[[^\]]+\]\(([^)]+)\)", readme)
-    missing: List[str] = []
+    missing: list[str] = []
     for link in links:
         if link.startswith(("http://", "https://", "#")):
             continue
@@ -98,14 +98,14 @@ def _check_readme_links() -> List[str]:
     return missing
 
 
-def _check_imports() -> List[str]:
+def _check_imports() -> list[str]:
     """Import core modules and return failures.
 
     Optional UI/data dependencies can be unavailable in minimal CI or local CPU
     environments. In those cases, the script falls back to syntax compilation for
     the affected file while still importing core model/search/evaluation modules.
     """
-    failures: List[str] = []
+    failures: list[str] = []
     optional_modules = {"streamlit_app.app", "data.dataset"}
     for name in IMPORTS:
         try:
@@ -126,7 +126,7 @@ def _check_imports() -> List[str]:
 
 def main() -> None:
     """Run repository verification."""
-    errors: List[str] = []
+    errors: list[str] = []
     missing = _check_required_files()
     if missing:
         errors.extend([f"Missing required file: {item}" for item in missing])

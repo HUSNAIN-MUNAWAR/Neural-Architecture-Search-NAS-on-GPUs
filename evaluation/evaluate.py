@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import time
-from typing import Dict
 
 import torch
 import torch.nn as nn
@@ -57,7 +56,7 @@ def measure_latency(
     return 1000.0 * elapsed / max(1, repeats)
 
 
-def evaluate_model(model: nn.Module, loader: DataLoader, device: torch.device) -> Dict[str, float]:
+def evaluate_model(model: nn.Module, loader: DataLoader, device: torch.device) -> dict[str, float]:
     """Return accuracy, parameter count, and latency metrics."""
     return {
         "test_accuracy": evaluate_accuracy(model, loader, device),

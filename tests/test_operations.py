@@ -6,7 +6,7 @@ import torch
 
 torch.set_num_threads(1)
 
-from models.operations import OPS, FactorizedReduce, Identity, MixedOp, PRIMITIVES, Zero
+from models.operations import OPS, PRIMITIVES, FactorizedReduce, Identity, MixedOp, Zero
 
 
 def test_all_operations_stride_one_shape() -> None:
