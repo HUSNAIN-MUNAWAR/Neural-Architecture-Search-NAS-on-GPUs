@@ -101,6 +101,28 @@ For deeper architecture notes, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ---
 
+## Application Screenshots
+
+These screenshots were captured from the local Streamlit dashboard after running the offline CPU smoke search in `configs/smoke_cpu.yaml`. The monitor view shows the generated `metrics.jsonl`, and the architecture view loads the generated `genotype.json`.
+
+### Overview
+
+![Streamlit dashboard overview](docs/screenshots/dashboard-overview.png)
+
+### Launch Search
+
+![Streamlit launch search controls](docs/screenshots/dashboard-launch-search.png)
+
+### Monitor Runs
+
+![Streamlit monitor runs view with smoke metrics](docs/screenshots/dashboard-monitor-runs.png)
+
+### Architecture Viewer
+
+![Streamlit architecture viewer with generated genotype](docs/screenshots/dashboard-architecture-viewer.png)
+
+---
+
 ## Core Capabilities
 
 - DARTS-style differentiable architecture search for image classification.
