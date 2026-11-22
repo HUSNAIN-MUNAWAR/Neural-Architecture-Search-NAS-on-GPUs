@@ -121,6 +121,16 @@ These screenshots were captured from the local Streamlit dashboard after running
 
 ![Streamlit architecture viewer with generated genotype](docs/screenshots/dashboard-architecture-viewer.png)
 
+## Synthetic NAS search reference reel
+
+The repository includes a reproducible animation of the DARTS search path at [`frontend/public/animation/nas-search-reel.html`](frontend/public/animation/nas-search-reel.html). It uses the synthetic smoke fixture, search network, genotype derivation, and discrete evaluation model references in this repository.
+
+```bash
+python scripts/generate_nas_animation.py
+```
+
+The execution mode, genotype summary, source checksum, tensor evidence, and limitations are recorded in [`docs/animation/nas_search_sequence.json`](docs/animation/nas_search_sequence.json). Synthetic data verifies plumbing only; it is not an accuracy or GPU-performance benchmark.
+
 ---
 
 ## Core Capabilities

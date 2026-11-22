@@ -1,0 +1,122 @@
+{
+  "architecture": {
+    "normal_concat": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "normal_edges": 8,
+    "normal_operation_counts": {
+      "dil_conv_5x5": 2,
+      "sep_conv_5x5": 2,
+      "skip_connect": 4
+    },
+    "reduce_concat": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "reduction_edges": 8,
+    "reduction_operation_counts": {
+      "avg_pool_3x3": 2,
+      "dil_conv_3x3": 1,
+      "dil_conv_5x5": 1,
+      "sep_conv_3x3": 1,
+      "sep_conv_5x5": 1,
+      "skip_connect": 2
+    }
+  },
+  "events": [
+    {
+      "detail": "The offline CIFAR-shaped loader creates reproducible train, validation, and test tensors from one seed.",
+      "id": "seed",
+      "metric": "seed 42 \u00b7 [3, 32, 32] images",
+      "short": "Seed",
+      "status": "reproducible",
+      "title": "Synthetic data is fixed"
+    },
+    {
+      "detail": "Every DARTS edge carries a weighted mixture of the repository\u2019s candidate operations.",
+      "id": "search-space",
+      "metric": "9 active op families \u00b7 4 steps",
+      "short": "Search",
+      "status": "continuous",
+      "title": "Mixed operations are instantiated"
+    },
+    {
+      "detail": "A real synthetic batch flows through the search network when PyTorch is available; otherwise the committed genotype reference remains explicit.",
+      "id": "forward",
+      "metric": "mode deterministic_genotype_reference \u00b7 output [4, 10]",
+      "short": "Forward",
+      "status": "computed",
+      "title": "Search network produces logits"
+    },
+    {
+      "detail": "The repository\u2019s derive_genotype utility selects non-zero operations and records normal/reduction edges.",
+      "id": "derive",
+      "metric": "8 normal + 8 reduction edges",
+      "short": "Derive",
+      "status": "discrete",
+      "title": "Architecture weights become a genotype"
+    },
+    {
+      "detail": "NetworkCIFAR compiles the exported genotype into a deployment-shaped architecture for a second forward path.",
+      "id": "compile",
+      "metric": "concat nodes [2, 3, 4, 5] \u00b7 [2, 3, 4, 5]",
+      "short": "Compile",
+      "status": "derived",
+      "title": "Discrete network is rebuilt"
+    },
+    {
+      "detail": "The genotype, synthetic configuration, tensor shapes, and execution mode are stored as a reviewable manifest.",
+      "id": "artifact",
+      "metric": "JSON manifest \u00b7 HTML reel \u00b7 no benchmark claim",
+      "short": "Export",
+      "status": "recorded",
+      "title": "Experiment evidence is exportable"
+    }
+  ],
+  "fixture": "nas-darts-synthetic-smoke-42",
+  "model": {
+    "candidate_operations": [
+      "sep_conv_3x3",
+      "sep_conv_5x5",
+      "dil_conv_3x3",
+      "dil_conv_5x5",
+      "max_pool_3x3",
+      "avg_pool_3x3",
+      "skip_connect",
+      "zero"
+    ],
+    "claim_boundary": "Synthetic data verifies model plumbing and genotype export; it is not a classification benchmark.",
+    "derived_implementation": "models/architecture.py::NetworkCIFAR",
+    "execution": {
+      "execution_mode": "deterministic_genotype_reference",
+      "fallback_reason": "No module named 'torch'"
+    },
+    "genotype_derivation": "search/utils.py::derive_genotype",
+    "name": "DARTS-CIFAR search network",
+    "search_implementation": "models/architecture.py::DartsNetworkCIFAR"
+  },
+  "schema_version": "1.0",
+  "source": {
+    "bytes": 337,
+    "config_reference": "configs/smoke_cpu.yaml",
+    "dataset_sizes": {
+      "test": 8,
+      "train": 8,
+      "val": 8
+    },
+    "image_shape": [
+      3,
+      32,
+      32
+    ],
+    "path": "examples/nas_animation_fixture.synthetic.json",
+    "seed": 42,
+    "sha256": "2c134450ebca8e4c717e6eb41943f92f22f81f7076c979208aabcc2e073cc966",
+    "synthetic": true
+  }
+}
