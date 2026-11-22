@@ -1,0 +1,14 @@
+stage,field,value
+environment,torch_version,2.7.1+cpu
+environment,device,cpu
+environment,cuda_available,false
+batch,shape,"[4, 3, 32, 32]"
+batch,label_histogram,"{""3"": 1, ""5"": 2, ""7"": 1}"
+initial forward,loss,2.163283109664917
+initial forward,top1_accuracy_percent,50.0
+search epoch,metrics,"{""arch_loss"": 2.3427367210388184, ""epoch"": 0.0, ""learning_rate"": 0.01, ""seconds"": 1.5879807472229004, ""train_acc"": 25.0, ""train_loss"": 2.2382328510284424}"
+search epoch,checkpoint_sha256,a0b4689b0b83a13607e7735cd3fca78b02f3f0f198335e759beae14cccf6f998
+final forward,loss,2.3124608993530273
+final forward,top1_accuracy_percent,0.0
+genotype,value,"{""normal"": [[""dil_conv_3x3"", 1], [""dil_conv_3x3"", 0], [""dil_conv_3x3"", 0], [""max_pool_3x3"", 1], [""sep_conv_5x5"", 0], [""dil_conv_3x3"", 1], [""dil_conv_3x3"", 3], [""dil_conv_3x3"", 4]], ""normal_concat"": [2, 3, 4, 5], ""reduce"": [[""max_pool_3x3"", 1], [""avg_pool_3x3"", 0], [""max_pool_3x3"", 2], [""sep_conv_3x3"", 0], [""skip_connect"", 2], [""skip_connect"", 1], [""skip_connect"", 2], [""avg_pool_3x3"", 0]], ""reduce_concat"": [2, 3, 4, 5]}"
+compiled forward,logits_shape,"[4, 10]"

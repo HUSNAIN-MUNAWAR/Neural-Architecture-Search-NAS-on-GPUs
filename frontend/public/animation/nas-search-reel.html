@@ -72,9 +72,10 @@
     ],
     "normal_edges": 8,
     "normal_operation_counts": {
-      "dil_conv_5x5": 2,
-      "sep_conv_5x5": 2,
-      "skip_connect": 4
+      "dil_conv_3x3": 3,
+      "max_pool_3x3": 3,
+      "sep_conv_5x5": 1,
+      "skip_connect": 1
     },
     "reduce_concat": [
       2,
@@ -85,11 +86,9 @@
     "reduction_edges": 8,
     "reduction_operation_counts": {
       "avg_pool_3x3": 2,
-      "dil_conv_3x3": 1,
-      "dil_conv_5x5": 1,
+      "max_pool_3x3": 2,
       "sep_conv_3x3": 1,
-      "sep_conv_5x5": 1,
-      "skip_connect": 2
+      "skip_connect": 3
     }
   },
   "events": [
@@ -104,7 +103,7 @@
     {
       "detail": "Every DARTS edge carries a weighted mixture of the repository\u2019s candidate operations.",
       "id": "search-space",
-      "metric": "9 active op families \u00b7 4 steps",
+      "metric": "8 active op families \u00b7 4 steps",
       "short": "Search",
       "status": "continuous",
       "title": "Mixed operations are instantiated"
@@ -112,7 +111,7 @@
     {
       "detail": "A real synthetic batch flows through the search network when PyTorch is available; otherwise the committed genotype reference remains explicit.",
       "id": "forward",
-      "metric": "mode deterministic_genotype_reference \u00b7 output [4, 10]",
+      "metric": "mode actual_forward_pass \u00b7 output [4, 10]",
       "short": "Forward",
       "status": "computed",
       "title": "Search network produces logits"
@@ -157,8 +156,112 @@
     "claim_boundary": "Synthetic data verifies model plumbing and genotype export; it is not a classification benchmark.",
     "derived_implementation": "models/architecture.py::NetworkCIFAR",
     "execution": {
-      "execution_mode": "deterministic_genotype_reference",
-      "fallback_reason": "No module named 'torch'"
+      "batch_shape": [
+        4,
+        3,
+        32,
+        32
+      ],
+      "cuda_available": false,
+      "derived_logits_shape": [
+        4,
+        10
+      ],
+      "execution_mode": "actual_forward_pass",
+      "genotype": {
+        "normal": [
+          [
+            "max_pool_3x3",
+            0
+          ],
+          [
+            "skip_connect",
+            1
+          ],
+          [
+            "max_pool_3x3",
+            1
+          ],
+          [
+            "dil_conv_3x3",
+            0
+          ],
+          [
+            "max_pool_3x3",
+            2
+          ],
+          [
+            "sep_conv_5x5",
+            0
+          ],
+          [
+            "dil_conv_3x3",
+            4
+          ],
+          [
+            "dil_conv_3x3",
+            3
+          ]
+        ],
+        "normal_concat": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "reduce": [
+          [
+            "max_pool_3x3",
+            1
+          ],
+          [
+            "avg_pool_3x3",
+            0
+          ],
+          [
+            "max_pool_3x3",
+            2
+          ],
+          [
+            "sep_conv_3x3",
+            0
+          ],
+          [
+            "skip_connect",
+            2
+          ],
+          [
+            "skip_connect",
+            1
+          ],
+          [
+            "skip_connect",
+            2
+          ],
+          [
+            "avg_pool_3x3",
+            0
+          ]
+        ],
+        "reduce_concat": [
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "label_histogram": {
+        "3": 1,
+        "5": 2,
+        "7": 1
+      },
+      "parameter_count": 15226,
+      "search_logits_shape": [
+        4,
+        10
+      ],
+      "search_loss": 2.163283,
+      "torch_version": "2.7.1+cpu"
     },
     "genotype_derivation": "search/utils.py::derive_genotype",
     "name": "DARTS-CIFAR search network",

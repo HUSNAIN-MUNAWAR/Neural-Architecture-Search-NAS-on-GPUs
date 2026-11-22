@@ -121,9 +121,21 @@ These screenshots were captured from the local Streamlit dashboard after running
 
 ![Streamlit architecture viewer with generated genotype](docs/screenshots/dashboard-architecture-viewer.png)
 
-## Synthetic NAS search reference reel
+## Real local NAS runtime evidence
 
-The repository includes a reproducible animation of the DARTS search path at [`frontend/public/animation/nas-search-reel.html`](frontend/public/animation/nas-search-reel.html). It uses the synthetic smoke fixture, search network, genotype derivation, and discrete evaluation model references in this repository.
+The accepted animation is generated from a real local PyTorch run, not from a decorative storyboard. Run:
+
+```powershell
+py -3.12 scripts/generate_real_runtime_video.py
+```
+
+This executes the one-epoch CPU DARTS smoke search in `configs/smoke_cpu.yaml`, preserves the measured model outputs, derives the genotype, rebuilds the discrete network, and writes [`docs/animation/runtime-evidence/nas-runtime.mp4`](docs/animation/runtime-evidence/nas-runtime.mp4). The accompanying [`REAL_RUNTIME.md`](docs/animation/REAL_RUNTIME.md) explains the evidence boundary and links the JSON, CSV, poster, and local checkpoint digest.
+
+The run uses synthetic CIFAR-shaped tensors only. Its losses and top-1 values verify runtime wiring; they are not a classification benchmark or a GPU-performance claim.
+
+## Legacy synthetic NAS search reference reel
+
+The repository also retains the earlier dependency-free reference reel at [`frontend/public/animation/nas-search-reel.html`](frontend/public/animation/nas-search-reel.html) for the existing UI/test contract. It is not the runtime evidence for this rebuild.
 
 ```bash
 python scripts/generate_nas_animation.py
